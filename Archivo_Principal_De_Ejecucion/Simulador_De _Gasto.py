@@ -1,21 +1,13 @@
 #importar modulo 
 import json 
 #inicio de sesion 
-listaJSON={}
-print         ("    inicio de sesión          ")
-iniciar=int (input(" 1.iniciar sesión")),
-crear= int(input  (" 2.crear usuario   "))
-opc=int (input("eliga una opción numerica :"))
-if opc ==1:
-    inicioDeSesion=input("ingresa tu nombre :")
-    clavedeUsuario=input("ingresa la clave :")
-elif opc ==2 :
-    nombre=input ("escriba su nombre completo:")
-    clave=input("escriba una clave :")
-    print ("usuario creado ")
-    
 
-if opc== 1 and 2 :
+import sys
+sys.path.append("Archivos_modularizados_de_funcionalidad")
+from Funciones import inicioSesion
+resultado=inicioSesion ()
+if resultado==True:
+    
     boleano=True
     while boleano :
 
@@ -34,3 +26,15 @@ if opc== 1 and 2 :
         opcion=int(input("eliga una opción numerica :"))
         if opcion==1 :
             print ()
+        elif opcion==2 :
+            print ()
+        elif opcion==3 :
+            print ()
+        elif opcion==4 :
+            print ()
+        elif opcion==5 :
+            boleano=False
+            print ("ha salido del programa ")
+            
+        else :
+            print ("opcion no valida")
