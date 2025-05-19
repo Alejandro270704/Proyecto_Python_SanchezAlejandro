@@ -32,9 +32,10 @@ if resultado==True:
         print ("=============================================")
         opcion=int(input("eliga una opción numerica :"))
         if opcion==1 :
-          datos,usuarioActual=Funciones.nuevoGasto(datos,usuarioActual)
+            datos,usuarioActual=Funciones.nuevoGasto(datos,usuarioActual)
         elif opcion==2 :
             print ()
+            Funciones.lista_gasto(datos,usuarioActual)
         elif opcion==3 :
             print ()
         elif opcion==4 :

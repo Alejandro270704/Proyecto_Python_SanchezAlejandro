@@ -1,12 +1,27 @@
 [
-
     {
         "usuario": "usuario:",
         "clave": "clave:",
-        "gastos":"gastos"
+        "gastos": {
+            "gastos": [],
+            "categoria": []
+        }
     },
     {
         "usuario": "juliana",
-        "clave": "katy"
+        "clave": "katy",
+        "gastos": [
+            {
+                "monto": 2555.0,
+                "categoria": "comida ",
+                "descripcion": ""
+            },
+            {
+                "monto": 4000.0,
+                "categoria": "trasnporte",
+                "descripcion": "mi viaje a miami"
+            }
+        ]
+        
     }
 ]
