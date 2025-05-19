@@ -1,11 +1,18 @@
-#importar modulo 
-import json 
-#inicio de sesion 
+#importar arhivo json
+
+
+#se importa la carpeta donde tiene el archivo de funciones para la ejecucion
 
 import sys
-sys.path.append("Archivos_modularizados_de_funcionalidad")
-from Funciones import inicioSesion
-resultado=inicioSesion ()
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from Archivos_modulos import Funciones
+resultado,datos,usuarioActual=Funciones.menusesion()
+
+
+
+
 if resultado==True:
     
     boleano=True
@@ -25,7 +32,7 @@ if resultado==True:
         print ("=============================================")
         opcion=int(input("eliga una opción numerica :"))
         if opcion==1 :
-            print ()
+          datos,usuarioActual=Funciones.nuevoGasto(datos,usuarioActual)
         elif opcion==2 :
             print ()
         elif opcion==3 :

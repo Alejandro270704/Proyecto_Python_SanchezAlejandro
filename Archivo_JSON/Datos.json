@@ -1,12 +1,12 @@
 [
- {
-   "usuario":"usuario:",
-   "contraseña":"contraseña"
- },
- {
-   "usuario":"usuario:",
- "contraseña":"contraseña:"
- }
 
+    {
+        "usuario": "usuario:",
+        "clave": "clave:",
+        "gastos":"gastos"
+    },
+    {
+        "usuario": "juliana",
+        "clave": "katy"
+    }
 ]
-
