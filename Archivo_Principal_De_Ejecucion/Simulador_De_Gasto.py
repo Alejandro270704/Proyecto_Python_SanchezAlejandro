@@ -34,7 +34,7 @@ if resultado==True:
         if opcion==1 :
             datos,usuarioActual=Funciones.nuevoGasto(datos,usuarioActual)
         elif opcion==2 :
-            print ()
+            
             Funciones.lista_gasto(datos,usuarioActual)
         elif opcion==3 :
             print ()

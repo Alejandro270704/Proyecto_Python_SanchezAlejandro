@@ -1,27 +1,21 @@
 [
     {
-        "usuario": "usuario:",
-        "clave": "clave:",
-        "gastos": {
-            "gastos": [],
-            "categoria": []
-        }
-    },
-    {
-        "usuario": "juliana",
-        "clave": "katy",
+        "usuario": "alejandro",
+        "clave": "123",
         "gastos": [
+            
             {
-                "monto": 2555.0,
-                "categoria": "comida ",
-                "descripcion": ""
+                "monto": 20000.0,
+                "categoria": "comida",
+                "descripcion": "comida de noche",
+                "fecha": "19/05/2025"
             },
             {
-                "monto": 4000.0,
-                "categoria": "trasnporte",
-                "descripcion": "mi viaje a miami"
+                "monto": 2322.0,
+                "categoria": "comida",
+                "descripcion": "",
+                "fecha": "19/05/2025"
             }
         ]
-        
     }
 ]
