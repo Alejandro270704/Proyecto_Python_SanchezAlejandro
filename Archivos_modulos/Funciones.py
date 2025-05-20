@@ -105,15 +105,13 @@ def nuevoGasto(datos,usuarioActual):
                 json.dump(datos, archivo, indent=4)
     return  datos,usuarioActual
 
-def lista_gasto(datos,usuarioActual):
+def lista_gasto(usuarioActual):
     limpiar_pantalla()
     print ("lista de gastos")
     print("1.ver todos los datos ")
     print("2.filtrar por fecha/categoria")
     opc_lista=int(input("elige opcion numerica:"))
     if opc_lista==1:
-        for usuario in datos:
-            if usuario["usuario"] == usuarioActual["usuario"]:
                 print(tabulate(usuarioActual["gastos"], headers="keys"))
     elif opc_lista==2:
         print ("listar gasto por:")
@@ -156,7 +154,53 @@ def lista_gasto(datos,usuarioActual):
                     if salirmenu == 2:
                         repetidor = False
 
-
-
-
+def calcularGasto(usuarioActual):
+    limpiar_pantalla()
+    total=0
+    print("calcular total de gastos")
+    print (" escoja el filtro para calcular el total")
+    print("1.diario")
+    print("2.semanal")
+    print("3.mensual")
+    opcion=int(input("opcion numerica :"))
+    try :
+        if opcion==1:
+            print ("formato esperado : dd/mm/yyyy")
+            fechaInicio=(input("digite la fecha exacta para calcular total de gasto :"))
+            fechaInicio=datetime.strptime(fechaInicio,"%d/%m/%Y")
+            for gasto in usuarioActual["gastos"]:
+                if gasto["fecha"]==fechaInicio.strftime("%d/%m/%Y"):
+                    total+=gasto["monto"]
+        elif opcion==2:
+            print ("formato esperado : dd/mm/yyyy")
+            fechaInicio=(input("digita un dia de la semana a consultar "))
+            fechaInicio=datetime.strptime(fechaInicio,"%d/%m/%Y")
+            semanaUsuario = fechaInicio.isocalendar()[1]
+            gastoUsuario = fechaInicio.year   
+            for gastos in usuarioActual["gastos"]:
+                gastoSemana=datetime.strptime(gastos["fecha"],"%d/%m/%Y")
+                semana=gastoSemana.isocalendar()[1]
+                Gasto = gastoSemana.year
+                
+                if semana== semanaUsuario and Gasto == gastoUsuario:
+                    total +=gastos["monto"]
+        elif opcion==3:
+            print ("formato esperado:mm/yyyy  ")
+            fechaInicio=(input("digite el mes y año : "))
+            fechaInicio=datetime.strptime(fechaInicio,"%m/%Y")
+            fechaMes=fechaInicio.month
+            fechaN=fechaInicio.year
+            for gastos in usuarioActual["gastos"]:
+                gastomes=datetime.strptime(gastos["fecha"],"%m/%Y")
+                mes=gastomes.month
+                anio=gastomes.year
+                if fechaMes==mes and fechaN==anio:
+                    total+=gastos["monto"]
+                
+            
+    except ValueError:
+        print ("formato invalido")
+        
+    
+    
 
