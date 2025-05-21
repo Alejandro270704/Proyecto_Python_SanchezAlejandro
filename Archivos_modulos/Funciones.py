@@ -91,20 +91,54 @@ def nuevoGasto(datos,usuarioActual):
     for usuario in datos:
         if usuario["usuario"] == usuarioActual["usuario"]:
             print ("menu de gastos")
-            monto=float(input("digite su gasto:"))
-            fechaActual=datetime.now().strftime("%d/%m/%Y")
-            print("categoria")
-            categoria=input("digita la categoria:")
-            opinion=int(input("quieres agregar una descripcion?:1:si  2:no:"))
-            if opinion==1 :
-                descripcion=input("escribe la descripcion")
+            print ("1.agregar un gasto ")
+            print ("2.modificar gasto ")
+            print ("3.eliminar gasto ")
+            opc=int(input("ingrese opcion numerica:"))
+            if opc==1:
+                monto=float(input("digite su gasto:"))
+                fechaActual=datetime.now().strftime("%d/%m/%Y")
+                print("categoria")
+                categoria=input("digita la categoria:")
+                opinion=int(input("quieres agregar una descripcion?:1:si  2:no:"))
+                if opinion==1 :
+                    descripcion=input("escribe la descripcion")
                 
-            else:
-                descripcion=str()
-                print ("no se agrego ninguna descripcion")
-            print ("se añadio el gasto")
-            usuarioActual["gastos"].append({"monto":monto, "categoria":categoria, "descripcion":descripcion,"fecha":fechaActual})
-            
+                else:
+                    descripcion=str()
+                    print ("no se agrego ninguna descripcion")
+                print ("se añadio el gasto")
+                usuarioActual["gastos"].append({"monto":monto, "categoria":categoria, "descripcion":descripcion,"fecha":fechaActual})
+            elif opc ==2:
+                if not usuarioActual["gastos"]:
+                    print("No hay gastos para modificar.")
+                else:
+                    for enumerador, gasto in enumerate(usuarioActual["gastos"]):
+                        print(f"{enumerador + 1}. Monto: {gasto['monto']}, Categoría: {gasto['categoria']}, Fecha: {gasto['fecha']}, Descripción: {gasto['descripcion']}")
+                    seleccion=int(input("selecione el numero del gasto que quiere modificar"))-1
+                    gasto=usuarioActual["gastos"][seleccion]
+                    NUE_gasto=float(input("nuevo monto:"))
+                    NUE_categoria=input("nueva categoria:")
+                    NUE_descripcion=input("nueva descripcion:")
+                    gasto["monto"] = float(NUE_gasto)
+                    gasto["categoria"] =  NUE_categoria
+                    gasto["descripcion"] = NUE_descripcion
+                    print ("gasto modificado correctamente ")
+            elif opc==3:
+                if not usuarioActual["gastos"]:
+                    print("No hay gastos para eliminar.")
+                else: 
+                    
+                    for enumerador, gasto in enumerate(usuarioActual["gastos"]):
+                        print(f"{enumerador + 1}. Monto: {gasto['monto']}, Categoría: {gasto['categoria']}, Fecha: {gasto['fecha']}, Descripción: {gasto['descripcion']}")
+                    seleccion=int(input("selecione el numero del gasto a eliminar: "))-1
+                    confirmarcion=input("estas seguro que quieres eliminar el gasto (s/n:)")
+                    if confirmarcion== "s":
+                        usuarioActual["gastos"].pop(seleccion)
+                        print ("gasto eliminado ")
+                    else :
+                        print ("no se elimino ")
+                        input("enter para continuar")
             
             
             with open("Archivo_JSON/Datos.json", "w") as archivo:
@@ -360,8 +394,15 @@ def generarReporte(usuarioActual,datos):
         if opcion==1:
             reporte=verYguardar_reporte(fechaInicio,diccionarioCategoria,total)
         elif opcion==2:
-            reporte=verYguardar_reporte(fechaInicio,diccionarioCategoria,total)
+            if "reporte" not in usuarioActual:
+                usuarioActual["reporte"] = []
+            reporte = verYguardar_reporte(fechaInicio, diccionarioCategoria, total)
             usuarioActual["reporte"].append(reporte)
+            
+            
+            with open("Archivo_JSON/Datos.json", "w") as archivo:
+                json.dump(datos, archivo, indent=4)
+            print(f"se guardó correctamente el reporte: {reporte}")
             
         
     elif opc==3:
@@ -397,8 +438,15 @@ def generarReporte(usuarioActual,datos):
             reporte=verYguardar_reporte(fechaInicio,diccionarioCategoria,total)
             
         elif opcion==2:
-            reporte=verYguardar_reporte(fechaInicio,diccionarioCategoria,total)
+            if "reporte" not in usuarioActual:
+                usuarioActual["reporte"] = []
+            reporte = verYguardar_reporte(fechaInicio, diccionarioCategoria, total)
             usuarioActual["reporte"].append(reporte)
+            
+            
+            with open("Archivo_JSON/Datos.json", "w") as archivo:
+                json.dump(datos, archivo, indent=4)
+            print(f"se guardó correctamente el reporte: {reporte}")
     elif opc==4:
         print("salio del reporte")
     else :
@@ -415,7 +463,7 @@ def simuladorGasto (datos,usuarioActual):
         print ("        Simulador de Gasto Diario            ")
         print ("=============================================")
         print ("          Seleccione una opción:             ")
-        print ("         1. Registrar nuevo gasto            ")
+        print ("         1. Registrar/eliminar/modificar gasto ")
         print ("         2. Listar gastos                  ")
         print ("         3. Calcular total de gastos")
         print ("         4. Generar reporte de gastos")

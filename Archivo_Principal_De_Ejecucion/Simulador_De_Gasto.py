@@ -1,4 +1,3 @@
-#importar arhivo json
 
 
 #se importa la carpeta donde tiene el archivo de funciones para la ejecucion
