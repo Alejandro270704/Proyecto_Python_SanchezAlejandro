@@ -3,7 +3,6 @@
         "usuario": "alejandro",
         "clave": "123",
         "gastos": [
-            
             {
                 "monto": 20000.0,
                 "categoria": "comida",
@@ -15,6 +14,48 @@
                 "categoria": "comida",
                 "descripcion": "",
                 "fecha": "19/05/2025"
+            },
+            {
+                "monto": 4000.0,
+                "categoria": "transporte",
+                "descripcion": "uber",
+                "fecha": "21/05/2025"
+            }
+        ],
+        "reporte": [
+            {
+                "fecha": "21/05/2025",
+                "categorias": {
+                    "transporte": 4000.0
+                },
+                "total": 4000.0
+            }
+        ]
+    },
+    {
+        "usuario": "laura",
+        "clave": "1234",
+        "gastos": [
+            {
+                "monto": 30000.0,
+                "categoria": "comida",
+                "descripcion": "",
+                "fecha": "21/05/2025"
+            },
+            {
+                "monto": 3444.0,
+                "categoria": "comida",
+                "descripcion": "",
+                "fecha": "21/05/2025"
+            }
+        ],
+        "reporte": [
+            {
+                "fecha": "21/05/2025",
+                "categorias": {
+                    "comida": 33444.0
+                },
+                "total": 33444.0
             }
         ]
     }
