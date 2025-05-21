@@ -157,6 +157,7 @@ def lista_gasto(usuarioActual):
 def calcularGasto(usuarioActual):
     limpiar_pantalla()
     total=0
+    diccionarioCategoria={}
     print("calcular total de gastos")
     print (" escoja el filtro para calcular el total")
     print("1.diario")
@@ -167,10 +168,22 @@ def calcularGasto(usuarioActual):
         if opcion==1:
             print ("formato esperado : dd/mm/yyyy")
             fechaInicio=(input("digite la fecha exacta para calcular total de gasto :"))
-            fechaInicio=datetime.strptime(fechaInicio,"%d/%m/%Y")
+            fechaInicio=datetime.strptime(fechaInicio,"%d/%m/%Y") 
             for gasto in usuarioActual["gastos"]:
                 if gasto["fecha"]==fechaInicio.strftime("%d/%m/%Y"):
+                    categoriaN=gasto["categoria"]
+                    
+                    if categoriaN in diccionarioCategoria:
+                        
+                        diccionarioCategoria[categoriaN]+=gasto["monto"]
+                    else :
+                        diccionarioCategoria[categoriaN]=gasto["monto"]
                     total+=gasto["monto"]
+            for categoria,monto in sorted(diccionarioCategoria.items(), key=lambda x: x[1], reverse=True):
+                print (categoria,":",monto)
+            print(f"Total de gastos: {total}")
+                        
+                    
         elif opcion==2:
             print ("formato esperado : dd/mm/yyyy")
             fechaInicio=(input("digita un dia de la semana a consultar "))
@@ -178,12 +191,26 @@ def calcularGasto(usuarioActual):
             semanaUsuario = fechaInicio.isocalendar()[1]
             gastoUsuario = fechaInicio.year   
             for gastos in usuarioActual["gastos"]:
+                
                 gastoSemana=datetime.strptime(gastos["fecha"],"%d/%m/%Y")
+                categoriaN=gastos["categoria"]
+               
                 semana=gastoSemana.isocalendar()[1]
                 Gasto = gastoSemana.year
+               
                 
                 if semana== semanaUsuario and Gasto == gastoUsuario:
-                    total +=gastos["monto"]
+                    
+                    if categoriaN in diccionarioCategoria:
+                        
+                        diccionarioCategoria[categoriaN]+=gastos["monto"]
+                    else :
+                        diccionarioCategoria[categoriaN]=gastos["monto"]
+                    total +=gastos["monto"]  
+            for categoria,monto in sorted(diccionarioCategoria.items(), key=lambda x: x[1], reverse=True):
+                print (categoria,":",monto)
+            print(f"Total de gastos: {total}")
+                     
         elif opcion==3:
             print ("formato esperado:mm/yyyy  ")
             fechaInicio=(input("digite el mes y año : "))
@@ -191,16 +218,155 @@ def calcularGasto(usuarioActual):
             fechaMes=fechaInicio.month
             fechaN=fechaInicio.year
             for gastos in usuarioActual["gastos"]:
-                gastomes=datetime.strptime(gastos["fecha"],"%m/%Y")
+                gastomes=datetime.strptime(gastos["fecha"],"%d/%m/%Y")
+                categoriaN=gastos["categoria"]
+                
+                
                 mes=gastomes.month
                 anio=gastomes.year
                 if fechaMes==mes and fechaN==anio:
                     total+=gastos["monto"]
+                    if categoriaN in diccionarioCategoria:
+                        
+                        diccionarioCategoria[categoriaN]+=gastos["monto"]
+                    else :
+                     diccionarioCategoria[categoriaN]=gastos["monto"]
+                
+            for categoria,monto in sorted(diccionarioCategoria.items(), key=lambda x: x[1], reverse=True):
+                print (categoria,":",monto)
+            print(f"Total de gastos: {total}")
                 
             
     except ValueError:
         print ("formato invalido")
-        
+    input("Presione Enter para volver al menú...")
     
+def generarReporte(usuarioActual):
+    
+    
+    print("=============================================")
+    print("           Generar Reporte de Gastos         ")
+    print("=============================================")
+    print("      1. Diario")
+    print("      2. Semanal")
+    print("      3. Mensual")
+    print("      4. Regresar al menú principal")
+    print("=============================================")
+    opc=int (input("digite opcion numerica:"))
+    total=0
+    diccionarioCategoria={}
+    if opc ==1:
+        print ("formato esperado : dd/mm/yyyy")
+        fechaInicio=(input("digite la fecha exacta para calcular total de gasto :"))
+        fechaInicio=datetime.strptime(fechaInicio,"%d/%m/%Y") 
+        for gasto in usuarioActual["gastos"]:
+                if gasto["fecha"]==fechaInicio.strftime("%d/%m/%Y"):
+                    categoriaN=gasto["categoria"]
+                    
+                    if categoriaN in diccionarioCategoria:
+                        
+                        diccionarioCategoria[categoriaN]+=gasto["monto"]
+                    else :
+                        diccionarioCategoria[categoriaN]=gasto["monto"]
+                    total+=gasto["monto"]
+        print("=============================================")
+        print ("             ¿Que desea hacer?")
+        print("=============================================")
+        print ("               1.ver reporte")
+        print ("               2.guardar reporte")
+        print("=============================================")
+        opcion=int(input(" digite opcion numerica:"))
+        if opcion==1:
+            print ("=====================================")
+            print (f"reporte diario para {fechaInicio.strftime('%d/%m/%Y')}")
+            print ("=====================================")
+            for categoria,monto in sorted(diccionarioCategoria.items(), key=lambda x: x[1], reverse=True):
+                print (categoria,":",monto)
+                print("=============================================")
+            print (f"         Total de gastos: {total}")
+
+        elif opcion==2:
+            print()
+    elif opcion==2:
+        
+        print ("formato esperado : dd/mm/yyyy")
+        fechaInicio=(input("digita un dia de la semana a consultar "))
+        fechaInicio=datetime.strptime(fechaInicio,"%d/%m/%Y")
+        semanaUsuario = fechaInicio.isocalendar()[1]
+        gastoUsuario = fechaInicio.year   
+        for gastos in usuarioActual["gastos"]:
+               
+            gastoSemana=datetime.strptime(gastos["fecha"],"%d/%m/%Y")
+            categoriaN=gastos["categoria"]
+               
+            semana=gastoSemana.isocalendar()[1]
+            Gasto = gastoSemana.year
+               
+                
+            if semana== semanaUsuario and Gasto == gastoUsuario:
+                    
+                if categoriaN in diccionarioCategoria:
+                        
+                    diccionarioCategoria[categoriaN]+=gastos["monto"]
+                else :
+                    diccionarioCategoria[categoriaN]=gastos["monto"]
+                total +=gastos["monto"]  
+        print("=============================================")
+        print ("             ¿Que desea hacer?")
+        print("=============================================")
+        print ("               1.ver reporte")
+        print ("               2.guardar reporte")
+        print("=============================================")
+        opcion=int(input(" digite opcion numerica:"))
+        if opcion==1:
+            print ("=====================================")
+            print (f"reporte diario para {fechaInicio.strftime('%d/%m/%Y')}")
+            print ("=====================================")
+            for categoria,monto in sorted(diccionarioCategoria.items(), key=lambda x: x[1], reverse=True):
+                print (categoria,":",monto)
+                print("=============================================")
+            print (f"         Total de gastos: {total}")
+            
+           
+    elif opcion==3:
+        print()
+    elif opcion==4:
+        print("")
+    else :
+        print("opcion no valida")
+def simuladorGasto (datos,usuarioActual):
     
 
+    
+    
+    boleano=True
+    while boleano :
+
+        #simulador de gasto 
+
+        print ("=============================================")
+        print ("        Simulador de Gasto Diario            ")
+        print ("=============================================")
+        print ("          Seleccione una opción:             ")
+        print ("         1. Registrar nuevo gasto            ")
+        print ("         2. Listar gastos                  ")
+        print ("         3. Calcular total de gastos")
+        print ("         4. Generar reporte de gastos")
+        print ("         5. Salir")
+        print ("=============================================")
+        opcion=int(input("eliga una opción numerica :"))
+        if opcion==1 :
+            datos,usuarioActual=nuevoGasto(datos,usuarioActual)
+        elif opcion==2 :
+          
+            lista_gasto(usuarioActual)
+        elif opcion==3 :
+            calcularGasto(usuarioActual)
+        elif opcion==4 :
+            generarReporte(usuarioActual)
+        elif opcion==5 :
+            boleano=False
+            print ("ha salido del programa ")
+            
+        else :
+            print ("opcion no valida")
